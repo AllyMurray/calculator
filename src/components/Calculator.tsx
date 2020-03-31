@@ -28,7 +28,11 @@ export default function Calculator() {
   };
 
   const modifierEntry = (value: string) => {
-    setHistoricInput(historicInput + currentInput + value);
+    if (historicInput.includes('=')) {
+      setHistoricInput(currentInput + value);
+    } else {
+      setHistoricInput(historicInput + currentInput + value);
+    }
     setCurrentInput('');
   };
 
