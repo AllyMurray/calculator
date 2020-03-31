@@ -16,6 +16,14 @@ const displayStyle = css`
   padding-right: 5px;
 `;
 
+const inputStyle = css`
+  overflow: hidden;
+  text-align: end;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+`;
+
 const currentInputStyle = css`
   font-size: 1.5em;
 `;
@@ -34,8 +42,8 @@ export interface IDisplayProps {
 export default function Display(props: IDisplayProps) {
   return (
     <div css={displayStyle}>
-      <span css={currentInputStyle}>{props.currentInput}</span>
-      <span css={historicInputStyle}>{props.historicInput}</span>
+      <span css={[inputStyle, currentInputStyle]}>{props.currentInput}</span>
+      <span css={[inputStyle, historicInputStyle]}>{props.historicInput}</span>
     </div>
   );
 }
