@@ -42,7 +42,9 @@ export interface IDisplayProps {
 export default function Display(props: IDisplayProps) {
   return (
     <div css={displayStyle}>
-      <span css={[inputStyle, currentInputStyle]}>{props.currentInput}</span>
+      <span css={[inputStyle, currentInputStyle]} id="display">
+        {props.currentInput}
+      </span>
       <span css={[inputStyle, historicInputStyle]}>{props.historicInput}</span>
     </div>
   );

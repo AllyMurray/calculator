@@ -29,6 +29,7 @@ export interface IButtonsProps {
   calculateResult: () => void;
   modifierEntry: (value: string) => void;
   numberEntry: (value: string) => void;
+  decimalEntry: () => void;
   allClear: () => void;
   clearEntry: () => void;
 }
@@ -42,58 +43,63 @@ export default function Buttons(props: IButtonsProps) {
 
   return (
     <div css={buttonsStyle}>
-      <Button css={clearButtonStyle} onClick={props.allClear}>
+      <Button css={clearButtonStyle} onClick={props.allClear} id="clear">
         AC
       </Button>
       <Button css={clearButtonStyle} onClick={props.clearEntry}>
         CE
       </Button>
-      <Button value={'/'} onClick={handleModifierEntry}>
+      <Button value={'/'} onClick={handleModifierEntry} id="divide">
         &divide;
       </Button>
-      <Button value={'*'} onClick={handleModifierEntry}>
+      <Button value={'*'} onClick={handleModifierEntry} id="multiply">
         x
       </Button>
-      <Button value={7} onClick={handleNumberEntry}>
+      <Button value={'7'} onClick={handleNumberEntry} id="seven">
         7
       </Button>
-      <Button value={8} onClick={handleNumberEntry}>
+      <Button value={'8'} onClick={handleNumberEntry} id="eight">
         8
       </Button>
-      <Button value={9} onClick={handleNumberEntry}>
+      <Button value={'9'} onClick={handleNumberEntry} id="nine">
         9
       </Button>
-      <Button value={'-'} onClick={handleModifierEntry}>
+      <Button value={'-'} onClick={handleModifierEntry} id="subtract">
         -
       </Button>
-      <Button value={4} onClick={handleNumberEntry}>
+      <Button value={'4'} onClick={handleNumberEntry} id="four">
         4
       </Button>
-      <Button value={5} onClick={handleNumberEntry}>
+      <Button value={'5'} onClick={handleNumberEntry} id="five">
         5
       </Button>
-      <Button value={6} onClick={handleNumberEntry}>
+      <Button value={'6'} onClick={handleNumberEntry} id="six">
         6
       </Button>
-      <Button value={'+'} onClick={handleModifierEntry}>
+      <Button value={'+'} onClick={handleModifierEntry} id="add">
         +
       </Button>
-      <Button value={1} onClick={handleNumberEntry}>
+      <Button value={'1'} onClick={handleNumberEntry} id="one">
         1
       </Button>
-      <Button value={2} onClick={handleNumberEntry}>
+      <Button value={'2'} onClick={handleNumberEntry} id="two">
         2
       </Button>
-      <Button value={3} onClick={handleNumberEntry}>
+      <Button value={'3'} onClick={handleNumberEntry} id="three">
         3
       </Button>
-      <Button css={tallButtonStyle} onClick={props.calculateResult}>
+      <Button css={tallButtonStyle} onClick={props.calculateResult} id="equals">
         =
       </Button>
-      <Button css={wideButtonStyle} value={0} onClick={handleNumberEntry}>
+      <Button
+        css={wideButtonStyle}
+        value={'0'}
+        onClick={handleNumberEntry}
+        id="zero"
+      >
         0
       </Button>
-      <Button value={'.'} onClick={handleNumberEntry}>
+      <Button onClick={props.decimalEntry} id="decimal">
         .
       </Button>
     </div>

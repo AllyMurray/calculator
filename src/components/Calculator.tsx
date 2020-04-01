@@ -17,36 +17,87 @@ const calculatorStyle = css`
   width: 90%;
 `;
 
+const arithmeticOperators = {
+  add: '+',
+  subtract: '-',
+  multiply: '*',
+  divide: '/',
+  decimal: '.',
+  equals: '='
+};
+
 export default function Calculator() {
-  const [currentInput, setCurrentInput] = useState('');
+  const [currentInput, setCurrentInput] = useState('0');
   const [historicInput, setHistoricInput] = useState('');
 
   const calculateResult = () => {
+    if (
+      historicInput === undefined ||
+      currentInput === undefined ||
+      historicInput.includes(arithmeticOperators.equals)
+    ) {
+      return;
+    }
+
     const result = evaluate(historicInput + currentInput);
     setHistoricInput(`${historicInput}${currentInput} = ${result}`);
-    setCurrentInput(result);
+    setCurrentInput(result.toString());
   };
 
   const modifierEntry = (value: string) => {
-    if (historicInput.includes('=')) {
+    const lastCharEntered = historicInput.slice(-1) as any;
+
+    // Don't allow the user to enter consecutive minus characters
+    if (
+      lastCharEntered === arithmeticOperators.subtract &&
+      value === arithmeticOperators.subtract
+    ) {
+      return;
+    }
+
+    // Strip off any trailing modifiers
+    let _historicInput = historicInput;
+    if (
+      historicInput.length !== 0 &&
+      currentInput.length === 0 &&
+      value !== arithmeticOperators.subtract &&
+      isNaN(lastCharEntered)
+    ) {
+      // If the user previous entered a modifier followed by a minus the
+      // second last character will also need replaced here.
+      const sliceEnd = isNaN(
+        historicInput.slice(historicInput.length - 2, -1) as any
+      )
+        ? -2
+        : -1;
+
+      _historicInput = historicInput.slice(0, sliceEnd);
+    }
+
+    if (historicInput.includes(arithmeticOperators.equals)) {
       setHistoricInput(currentInput + value);
     } else {
-      setHistoricInput(historicInput + currentInput + value);
+      setHistoricInput(_historicInput + currentInput + value);
     }
     setCurrentInput('');
   };
 
   const numberEntry = (value: string) => {
-    setCurrentInput(currentInput + value);
+    setCurrentInput((currentInput === '0' ? '' : currentInput) + value);
+  };
+
+  const decimalEntry = () => {
+    if (currentInput.includes(arithmeticOperators.decimal)) return;
+    setCurrentInput(currentInput + arithmeticOperators.decimal);
   };
 
   const allClear = () => {
     setHistoricInput('');
-    setCurrentInput('');
+    setCurrentInput('0');
   };
 
   const clearEntry = () => {
-    setCurrentInput('');
+    setCurrentInput('0');
   };
 
   return (
@@ -56,6 +107,7 @@ export default function Calculator() {
         calculateResult={calculateResult}
         modifierEntry={modifierEntry}
         numberEntry={numberEntry}
+        decimalEntry={decimalEntry}
         allClear={allClear}
         clearEntry={clearEntry}
       />

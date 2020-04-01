@@ -21,6 +21,7 @@ export interface IButtonProps {
   children: ReactNode;
   value?: string | string[] | number;
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
+  id?: string;
 }
 
 export default function Button(props: IButtonProps) {
